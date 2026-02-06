@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>ViRA CCTV Calculator</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/estimate_calculator_style.css" />
+  </head>
+  <body>
+    <div id="splash-screen">
+      <img
+        src="images/logo.png"
+        alt="ViRA Logo"
+        style="max-width: 300px; margin-bottom: 20px"
+      />
+      <div class="tagline">CCTV Estimate Calculator</div>
+      <div class="loader"></div>
+    </div>
+
+    <div id="app-container" class="container hidden fade-in">
+      <div
+        class="header-main-section"
+        style="text-align: center; margin-bottom: 25px"
+      >
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 10px;
+          "
+        >
+          <h2 class="top-heading">Check Your Estimate Now</h2>
+          <button
+            onclick="window.location.reload()"
+            style="
+              position: absolute;
+              right: 5px;
+              background: rgba(255, 255, 255, 0.1);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              color: var(--accent);
+              cursor: pointer;
+              padding: 6px 10px;
+              border-radius: 6px;
+              font-size: 0.8rem;
+            "
+          >
+            <i class="fas fa-sync-alt"></i>
+          </button>
+        </div>
+
+        <p class="sub-heading">Select Brand & Resolution</p>
+
+        <div style="max-width: 100%; margin: 0 auto">
+          <select id="brandSeries" onchange="updateCameraModels()">
+            <option value="cp_24_normal">CP PLUS 2.4MP HD Normal</option>
+            <option value="cp_24_mic">CP PLUS 2.4MP HD Built-In Mic</option>
+            <option value="cp_24_dual">CP PLUS 2.4MP HD Dual Color</option>
+            <option value="cp_24_color">CP PLUS 2.4MP HD Full Color</option>
+            <option value="cp_5_normal">CP PLUS 5MP HD Normal</option>
+            <option value="cp_5_mic">CP PLUS 5MP HD Built-In Mic</option>
+            <option value="cp_5_dual">CP PLUS 5MP HD Dual Color</option>
+            <option value="cp_5_color">CP PLUS 5MP HD Full Color</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-video"></i> &nbsp; Indoor/Dome Camera
+        </div>
+        <div class="stepper">
+          <button class="stepper-btn" onclick="updateCount('indoor', -1)">
+            -
+          </button>
+          <div class="stepper-val" id="indoorCountDisplay">0</div>
+          <button class="stepper-btn" onclick="updateCount('indoor', 1)">
+            +
+          </button>
+        </div>
+        <input
+          type="text"
+          id="indoorTypeDisplay"
+          class="auto-select-input"
+          value="Dome Camera"
+          disabled
+        />
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-video"></i> &nbsp; Outdoor/Bullet Camera
+        </div>
+        <div class="stepper">
+          <button class="stepper-btn" onclick="updateCount('outdoor', -1)">
+            -
+          </button>
+          <div class="stepper-val" id="outdoorCountDisplay">0</div>
+          <button class="stepper-btn" onclick="updateCount('outdoor', 1)">
+            +
+          </button>
+        </div>
+        <input
+          type="text"
+          id="outdoorTypeDisplay"
+          class="auto-select-input"
+          value="Bullet Camera"
+          disabled
+        />
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-microchip"></i> &nbsp; DVR/NVR (Auto Selected)
+        </div>
+        <input
+          type="text"
+          id="dvrModelDisplay"
+          class="auto-select-input"
+          value="Select At Least One Camera"
+          disabled
+        />
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-hdd"></i> &nbsp; Storage (Hard Disk)
+        </div>
+        <select
+          id="hddSize"
+          class="auto-select-input"
+          style="
+            border-style: solid !important;
+            opacity: 1;
+            background-color: #1a1a1a;
+            color: white;
+          "
+          onchange="calculateTotal()"
+        >
+          <option value="0">No Hard Disk</option>
+          <option value="0.5">500 GB Surveillance HDD</option>
+          <option value="1">1 TB Surveillance HDD</option>
+          <option value="2">2 TB Surveillance HDD</option>
+          <option value="4">4 TB Surveillance HDD</option>
+        </select>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-bolt"></i> &nbsp; Power Supply (Auto-Select)
+        </div>
+        <input
+          type="text"
+          id="psuModelDisplay"
+          class="auto-select-input"
+          value="Select Cameras First"
+          disabled
+        />
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-bolt"></i> &nbsp; Cable Selection
+        </div>
+
+        <p class="sub-heading" style="margin-top: 10px; font-size: 0.8rem">
+          Select Cable Quality (Per Meter Rate)
+        </p>
+        <select
+          id="cableQuality"
+          class="auto-select-input"
+          style="
+            border-style: solid !important;
+            opacity: 1;
+            background-color: #1a1a1a;
+            color: white;
+          "
+          onchange="calculateTotal()"
+        >
+          <option value="10">Economy (₹10/m)</option>
+          <option value="12">Standard (₹12/m)</option>
+          <option value="15">Premium (₹15/m)</option>
+        </select>
+
+        <div id="cableManualSection" style="margin-top: 15px">
+          <p
+            id="cableStatusText"
+            style="
+              color: var(--accent);
+              font-size: 0.85rem;
+              margin-bottom: 10px;
+            "
+          ></p>
+          <div class="stepper" id="cableStepperContainer">
+            <button class="stepper-btn" onclick="updateCableCount(-1)">
+              -
+            </button>
+            <div class="stepper-val" id="cableCountDisplay">0</div>
+            <button class="stepper-btn" onclick="updateCableCount(1)">+</button>
+          </div>
+          <span id="cableUnitLabel" style="font-size: 0.8rem; color: #888"
+            >Rolls (90m)</span
+          >
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-tools"></i> &nbsp; Accessories & Labor
+        </div>
+        <div class="accessory-grid">
+          <input
+            type="text"
+            id="bncDisplay"
+            class="auto-select-input"
+            value="0 BNC"
+            disabled
+          />
+          <input
+            type="text"
+            id="dcDisplay"
+            class="auto-select-input"
+            value="0 DC"
+            disabled
+          />
+        </div>
+        <input
+          type="text"
+          id="pvcDisplay"
+          class="auto-select-input"
+          value="0 PVC Boxes"
+          disabled
+        />
+
+        <div class="toggle-container">
+          <span style="color: var(--accent); font-weight: 600"
+            >Show Additional Components?</span
+          >
+          <label class="switch">
+            <input
+              type="checkbox"
+              id="extrasToggle"
+              onchange="toggleExtras()"
+            />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div id="extrasPanel" class="extras-panel">
+          <select
+            id="extraRack"
+            class="extra-select"
+            onchange="calculateTotal()"
+          >
+            <option value="none">-- DVR Rack / Box --</option>
+            <option value="rack">DVR Rack (Metal) - ₹850</option>
+            <option value="box">DVR Box (PVC) - ₹650</option>
+          </select>
+          <select
+            id="extraWifiDongle"
+            class="extra-select"
+            onchange="calculateTotal()"
+          >
+            <option value="none">-- WiFi Dongle (For DVR) --</option>
+            <option value="dongle">WiFi Dongle (USB) - ₹850</option>
+          </select>
+          <select
+            id="extraRouter"
+            class="extra-select"
+            onchange="calculateTotal()"
+          >
+            <option value="none">-- 4G WiFi SIM Router --</option>
+            <option value="router">4G SIM Router - ₹1650</option>
+          </select>
+          <select
+            id="extraHdmi"
+            class="extra-select"
+            onchange="calculateTotal()"
+          >
+            <option value="none">-- HDMI Cable --</option>
+            <option value="3m">HDMI Cable 3m - ₹350</option>
+            <option value="5m">HDMI Cable 5m - ₹350</option>
+            <option value="10m">HDMI Cable 10m - ₹350</option>
+          </select>
+          <select
+            id="extraMonitor"
+            class="extra-select"
+            onchange="calculateTotal()"
+          >
+            <option value="none">-- Monitor / TV --</option>
+            <option value="19in">LED Monitor 19" - ₹3800</option>
+            <option value="24in">LED Monitor 24" - ₹4500</option>
+          </select>
+          <select
+            id="extraMouseBrand"
+            class="extra-select"
+            onchange="calculateTotal()"
+          >
+            <option value="none">-- Wireless Mouse --</option>
+            <option value="intex">Wireless Mouse (Intex) - ₹650</option>
+            <option value="hp">Wireless Mouse (HP) - ₹650</option>
+            <option value="dell">Wireless Mouse (Dell) - ₹650</option>
+          </select>
+          <select
+            id="extraUsb"
+            class="extra-select"
+            onchange="calculateTotal()"
+          >
+            <option value="none">-- USB Extension Cable --</option>
+            <option value="3m">USB Extension 3m - ₹250</option>
+            <option value="5m">USB Extension 5m - ₹250</option>
+          </select>
+        </div>
+
+        <label style="margin-top: 10px">Installation Charges (Labor)</label>
+        <input
+          type="text"
+          id="installDisplay"
+          class="auto-select-input"
+          value="₹0 (@ ₹350/Cam)"
+          disabled
+        />
+      </div>
+
+      <div class="card">
+        <div class="toggle-row">
+          <span style="font-weight: 500">Apply GST (18%)</span>
+          <label class="switch">
+            <input type="checkbox" id="gstToggle" onchange="calculateTotal()" />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div style="height: 120px"></div>
+    </div>
+
+    <div id="sticky-footer" class="sticky-footer hidden">
+      <div>
+        <div class="total-label">Subtotal Estimate</div>
+        <div class="total-price" id="footerTotal">₹0</div>
+      </div>
+      <button
+        class="btn btn-primary"
+        style="width: auto; padding: 12px 25px"
+        onclick="openModal()"
+      >
+        Next
+      </button>
+    </div>
+
+    <div id="customerModal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <h3
+          style="
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-family: &quot;Poppins&quot;;
+          "
+        >
+          Customer Details
+        </h3>
+        <!-- Customer Name -->
+<div class="form-group">
+  <input 
+    type="text"
+    id="custName"
+    placeholder="Customer Name"
+    autocomplete="off"
+  />
+  <small class="error-msg" id="nameError"></small>
+</div>
+
+<!-- WhatsApp Number -->
+<div class="form-group">
+  <input 
+    type="tel"
+    id="custPhone"
+    placeholder="WhatsApp Number"
+    maxlength="10"
+    inputmode="numeric"
+    autocomplete="off"
+  />
+  <small class="error-msg" id="phoneError"></small>
+</div>
+
+        
+        <button
+          class="btn btn-primary"
+          style="width: 100%; padding: 16px; font-weight: 600"
+          onclick="generateInvoice()"
+        >
+          Create Final Quote
+        </button>
+        <button
+          class="btn"
+          style="
+            width: 100%;
+            margin-top: 12px;
+            background: transparent;
+            color: #666;
+          "
+          onclick="closeModal()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <div id="invoice-view">
+      <!-- HEADER -->
+      <div style="display: flex; justify-content: space-between;">
+        <div style="justify-content: space-between;">
+          <img src="images/logo_invoice.png" width="200" alt="">
+         
+        </div>
+
+        <div style="text-align: right">
+          <h3 id="quotationId"></h3>
+          <p><strong>Date:</strong> <span id="inv-date"></span></p>
+          <p><strong>Valid Until:</strong> <span id="valid-date"></span></p>
+        </div>
+      </div>
+
+      <!-- CUSTOMER -->
+      <div style="margin-bottom: 20px">
+        <strong>To:</strong>
+        <p id="inv-name"></p>
+        <p id="inv-phone-disp"></p>
+      </div>
+
+      <!-- TABLE -->
+      <table border="1" width="100%" cellspacing="0" cellpadding="6">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Item Name</th>
+            <th>Qty</th>
+            <th>Unit P</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody id="invoice-body"></tbody>
+      </table>
+
+      <!-- TOTALS -->
+      <div style="margin-top: 20px; text-align: right">
+        <p>SUBTOTAL: <strong id="inv-subtotal"></strong></p>
+        <p>GST (18%): <strong id="inv-gst"></strong></p>
+        <p style="font-size: 18px">
+          GRAND TOTAL: <strong id="inv-total"></strong>
+        </p>
+      </div>
+
+      
+
+     
+
+    <script>
+      /* =========================
+   RATES
+========================= */
+      const RATES = {
+        cameras: {
+          cp_24_normal: {
+            dome: 750,
+            bullet: 850,
+            dName: "2.4MP HD Dome",
+            bName: "2.4MP HD Bullet",
+          },
+          cp_24_mic: {
+            dome: 850,
+            bullet: 950,
+            dName: "2.4MP Mic Dome",
+            bName: "2.4MP Mic Bullet",
+          },
+          cp_24_dual: {
+            dome: 1150,
+            bullet: 1250,
+            dName: "2.4MP Dual Dome",
+            bName: "2.4MP Dual Bullet",
+          },
+          cp_24_color: {
+            dome: 1350,
+            bullet: 1450,
+            dName: "2.4MP Color Dome",
+            bName: "2.4MP Color Bullet",
+          },
+          cp_5_normal: {
+            dome: 1350,
+            bullet: 1450,
+            dName: "5MP HD Dome",
+            bName: "5MP HD Bullet",
+          },
+          cp_5_mic: {
+            dome: 1450,
+            bullet: 1550,
+            dName: "5MP Mic Dome",
+            bName: "5MP Mic Bullet",
+          },
+          cp_5_dual: {
+            dome: 1550,
+            bullet: 1650,
+            dName: "5MP Dual Dome",
+            bName: "5MP Dual Bullet",
+          },
+          cp_5_color: {
+            dome: 1650,
+            bullet: 1750,
+            dName: "5MP Color Dome",
+            bName: "5MP Color Bullet",
+          },
+        },
+        dvr: {
+          "2.4MP": { 4: 2250, 8: 3150, 16: 5250 },
+          "5MP": { 4: 3450, 8: 4550, 16: 5450 },
+        },
+        psu: { 4: 550, 8: 750, 16: 1250 },
+        hdd: { 0: 0, 0.5: 1750, 1: 3850, 2: 7250, 4: 12500 },
+        acc: { bnc: 30, dc: 15, pvc: 40, labor: 350, cableRollPrice: 1250 },
+        extras: {
+          rack: 850,
+          box: 650,
+          dongle: 850,
+          router: 1650,
+          hdmi: 350,
+          mon19: 3800,
+          mon24: 4500,
+          mouse: 650,
+          usb: 250,
+        },
+      };
+
+      let state = {
+        indoorCount: 0,
+        outdoorCount: 0,
+        cableCount: 0,
+        brand: "cp_24_normal",
+      };
+
+      /* =========================
+   SAFE GETTER
+========================= */
+      function el(id) {
+        return document.getElementById(id);
+      }
+
+      /* =========================
+   INIT + SPLASH FIX
+========================= */
+      document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(() => {
+          const splash = el("splash-screen");
+          const app = el("app-container");
+          const footer = el("sticky-footer");
+
+          if (splash) splash.style.display = "none";
+          if (app) app.classList.remove("hidden");
+          if (footer) footer.classList.remove("hidden");
+
+          updateCameraModels();
+        }, 1200);
+      });
+
+      /* =========================
+   CONTROLS
+========================= */
+      function updateCount(type, chg) {
+        if (type === "indoor")
+          state.indoorCount = Math.max(0, state.indoorCount + chg);
+        else state.outdoorCount = Math.max(0, state.outdoorCount + chg);
+
+        if (el("indoorCountDisplay"))
+          el("indoorCountDisplay").innerText = state.indoorCount;
+
+        if (el("outdoorCountDisplay"))
+          el("outdoorCountDisplay").innerText = state.outdoorCount;
+
+        const total = state.indoorCount + state.outdoorCount;
+        const hdd = el("hddSize");
+
+        if (hdd) {
+          if (total > 0 && hdd.value === "0") hdd.value = "0.5";
+          if (total === 0) hdd.value = "0";
+        }
+
+        calculateTotal();
+      }
+
+      function updateCableCount(chg) {
+        state.cableCount = Math.max(0, state.cableCount + chg);
+        if (el("cableCountDisplay"))
+          el("cableCountDisplay").innerText = state.cableCount;
+        calculateTotal();
+      }
+
+      function updateCameraModels() {
+        state.brand = el("brandSeries")?.value || state.brand;
+        const brand = RATES.cameras[state.brand];
+
+        if (el("indoorTypeDisplay"))
+          el("indoorTypeDisplay").value = brand.dName;
+
+        if (el("outdoorTypeDisplay"))
+          el("outdoorTypeDisplay").value = brand.bName;
+
+        calculateTotal();
+      }
+
+      function toggleExtras() {
+        const panel = el("extrasPanel");
+        const toggle = el("extrasToggle");
+        if (!panel || !toggle) return;
+
+        toggle.checked
+          ? panel.classList.add("show")
+          : panel.classList.remove("show");
+        calculateTotal();
+      }
+
+      /* =========================
+   MAIN CALCULATION
+========================= */
+      function calculateTotal() {
+        let sub = 0;
+        const totalCams = state.indoorCount + state.outdoorCount;
+        const brand = RATES.cameras[state.brand];
+        const resKey = state.brand.includes("_5_") ? "5MP" : "2.4MP";
+        const cableRate = parseFloat(el("cableQuality")?.value || 0);
+
+        /* Cameras */
+        sub += state.indoorCount * brand.dome;
+        sub += state.outdoorCount * brand.bullet;
+
+        /* DVR + PSU */
+        let slots = 0;
+        if (totalCams > 0) {
+          slots = totalCams <= 4 ? 4 : totalCams <= 8 ? 8 : 16;
+          sub += RATES.dvr[resKey][slots] + RATES.psu[slots];
+
+          if (el("dvrModelDisplay"))
+            el("dvrModelDisplay").value = `CP PLUS ${slots}CH ${resKey} DVR`;
+
+          if (el("psuModelDisplay"))
+            el("psuModelDisplay").value =
+              `${slots}CH ${slots === 16 ? "20A" : "SMPS"}`;
+        }
+
+        /* Accessories */
+        const bncQty = totalCams * 2;
+        const dcQty = totalCams;
+        const pvcQty = totalCams;
+        const laborTotal = totalCams * RATES.acc.labor;
+
+        sub +=
+          bncQty * RATES.acc.bnc +
+          dcQty * RATES.acc.dc +
+          pvcQty * RATES.acc.pvc +
+          laborTotal;
+
+        if (el("bncDisplay")) el("bncDisplay").value = `${bncQty} BNC Nos`;
+        if (el("dcDisplay")) el("dcDisplay").value = `${dcQty} DC Nos`;
+        if (el("pvcDisplay")) el("pvcDisplay").value = `${pvcQty} PVC Boxes`;
+        if (el("installDisplay"))
+          el("installDisplay").value =
+            `₹${laborTotal.toLocaleString()} (@ ₹${RATES.acc.labor}/Cam)`;
+
+        /* HDD */
+        sub += RATES.hdd[el("hddSize")?.value] || 0;
+
+        /* Cable Logic */
+        let cablePrice = 0;
+        const statusText = el("cableStatusText");
+        const stepperContainer = el("cableStepperContainer");
+        const unitLabel = el("cableUnitLabel");
+
+        if (totalCams > 0 && totalCams < 4) {
+          const totalMeters = totalCams * 20;
+          cablePrice = totalMeters * cableRate;
+          if (statusText)
+            statusText.innerText = `Auto: ${totalMeters} Meters calculated`;
+          if (stepperContainer) stepperContainer.style.display = "none";
+          if (unitLabel) unitLabel.innerText = "Meters (Per Cam 20m)";
+        } else if (totalCams >= 4 && totalCams <= 6) {
+          cablePrice = RATES.acc.cableRollPrice;
+          if (statusText)
+            statusText.innerText = `Auto: 1 Full Roll (90m) applied`;
+          if (stepperContainer) stepperContainer.style.display = "none";
+          if (unitLabel) unitLabel.innerText = "Full Roll (90m)";
+        } else if (totalCams > 6) {
+          if (state.cableCount === 0) state.cableCount = 1;
+          cablePrice = state.cableCount * RATES.acc.cableRollPrice;
+          if (statusText) statusText.innerText = "Manual Selection:";
+          if (stepperContainer) stepperContainer.style.display = "flex";
+          if (unitLabel) unitLabel.innerText = "Rolls (90m each)";
+        } else {
+          if (statusText)
+            statusText.innerText = "Add cameras to calculate cable";
+          if (stepperContainer) stepperContainer.style.display = "none";
+        }
+
+        sub += cablePrice;
+
+        if (el("cableCountDisplay"))
+          el("cableCountDisplay").innerText = state.cableCount;
+
+        /* =========================
+   EXTRAS CALCULATION
+========================= */
+        if (el("extrasToggle")?.checked) {
+          const rack = el("extraRack")?.value;
+          const dongle = el("extraWifiDongle")?.value;
+          const router = el("extraRouter")?.value;
+          const hdmi = el("extraHdmi")?.value;
+          const monitor = el("extraMonitor")?.value;
+          const mouse = el("extraMouseBrand")?.value;
+          const usb = el("extraUsb")?.value;
+
+          if (rack && rack !== "none") sub += RATES.extras[rack];
+          if (dongle && dongle !== "none") sub += RATES.extras.dongle;
+          if (router && router !== "none") sub += RATES.extras.router;
+          if (hdmi && hdmi !== "none") sub += RATES.extras.hdmi;
+
+          if (monitor === "19in") sub += RATES.extras.mon19;
+          if (monitor === "24in") sub += RATES.extras.mon24;
+
+          if (mouse && mouse !== "none") sub += RATES.extras.mouse;
+          if (usb && usb !== "none") sub += RATES.extras.usb;
+        }
+
+        /* GST */
+        const isGst = el("gstToggle")?.checked;
+        const gst = isGst ? sub * 0.18 : 0;
+        const grand = sub + gst;
+
+        if (el("footerTotal"))
+          el("footerTotal").innerText =
+            "₹" + Math.round(grand).toLocaleString();
+
+        return { sub, gst, grand };
+      }
+
+      /* =========================
+   INVOICE
+========================= */
+      function openModal() {
+        el("customerModal")?.classList.remove("hidden");
+      }
+
+      function closeModal() {
+        el("customerModal")?.classList.add("hidden");
+      }
+
+      function closeInvoice() {
+        el("invoice-view").style.display = "none";
+        el("app-container")?.classList.remove("hidden");
+        el("sticky-footer")?.classList.remove("hidden");
+      }
+      /* Generate Random number for Quotation */
+      function generateQuotationID() {
+
+  const now = new Date();
+
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const year = now.getFullYear().toString().slice(-2); // last 2 digits
+
+  const prefix = `VEQ${month}${year}`;
+
+  // Get saved serial for this month
+  const storedData = JSON.parse(localStorage.getItem("veqSerial")) || {};
+
+  let serial = 1;
+
+  if (storedData.prefix === prefix) {
+    serial = storedData.lastSerial + 1;
+  }
+
+  // Save updated serial
+  localStorage.setItem("veqSerial", JSON.stringify({
+    prefix: prefix,
+    lastSerial: serial
+  }));
+
+  const formattedSerial = serial.toString().padStart(2, "0");
+
+  return `${prefix}-${formattedSerial}`;
+}
+
+      /* ================================== */
+
+
+function generateInvoice() {
+
+  /* =========================
+   PROFESSIONAL FORM VALIDATION
+========================= */
+
+const nameInput = el("custName");
+const phoneInput = el("custPhone");
+
+const name = nameInput?.value.trim();
+const phone = phoneInput?.value.trim();
+
+const nameRegex = /^[A-Za-z]+(?:\s[A-Za-z]+)*$/;   // Letters only, no double space
+const phoneRegex = /^[6-9][0-9]{9}$/;              // Indian 10-digit mobile
+
+// Clear previous errors
+if (el("nameError")) el("nameError").innerText = "";
+if (el("phoneError")) el("phoneError").innerText = "";
+
+nameInput?.classList.remove("input-error");
+phoneInput?.classList.remove("input-error");
+
+let isValid = true;
+
+/* Name Validation */
+if (!name || name.length < 3 || !nameRegex.test(name)) {
+  if (el("nameError"))
+    el("nameError").innerText =
+      "Enter valid name (letters only, minimum 3 characters)";
+  nameInput?.classList.add("input-error");
+  isValid = false;
+}
+
+/* Phone Validation */
+if (!phoneRegex.test(phone)) {
+  if (el("phoneError"))
+    el("phoneError").innerText =
+      "Enter valid 10-digit mobile number";
+  phoneInput?.classList.add("input-error");
+  isValid = false;
+}
+
+if (!isValid) return;
+
+
+  const calc = calculateTotal();
+
+  /* Quotation ID */
+  if (el("quotationId"))
+    el("quotationId").innerText = generateQuotationID();
+
+  const totalCams = state.indoorCount + state.outdoorCount;
+  const brand = RATES.cameras[state.brand];
+  const resKey = state.brand.includes("_5_") ? "5MP" : "2.4MP";
+  const slots = totalCams <= 4 ? 4 : totalCams <= 8 ? 8 : 16;
+
+  let rows = "";
+  let sr = 1;
+
+  function addRow(name, qty, price) {
+    const amount = qty * price;
+    rows += `
+      <tr>
+        <td>${sr++}</td>
+        <td>${name}</td>
+        <td>${qty}</td>
+        <td>₹${price}</td>
+        <td>₹${amount}</td>
+      </tr>`;
+  }
+
+  /* =========================
+     CAMERAS
+  ========================= */
+  if (state.indoorCount > 0)
+    addRow(brand.dName, state.indoorCount, brand.dome);
+
+  if (state.outdoorCount > 0)
+    addRow(brand.bName, state.outdoorCount, brand.bullet);
+
+  /* =========================
+     DVR + PSU
+  ========================= */
+  if (totalCams > 0) {
+    addRow(`${slots}CH ${resKey} DVR`, 1, RATES.dvr[resKey][slots]);
+    addRow("Power Supply", 1, RATES.psu[slots]);
+  }
+
+  /* =========================
+     HDD
+  ========================= */
+  const hddVal = el("hddSize")?.value;
+  if (hddVal && hddVal !== "0")
+    addRow(`${hddVal}TB Surveillance HDD`, 1, RATES.hdd[hddVal]);
+
+    /* =========================
+   CABLE (ADD TO INVOICE)
+========================= */
+let cablePrice = 0;
+const cableRate = parseFloat(el("cableQuality")?.value || 0);
+
+if (totalCams > 0 && totalCams < 4) {
+  const totalMeters = totalCams * 20;
+  cablePrice = totalMeters * cableRate;
+  addRow(`Camera Cable (${totalMeters}m)`, totalMeters, cableRate);
+}
+else if (totalCams >= 4 && totalCams <= 6) {
+  cablePrice = RATES.acc.cableRollPrice;
+  addRow("Camera Cable (1 Full Roll 90m)", 1, RATES.acc.cableRollPrice);
+}
+else if (totalCams > 6) {
+  const rolls = state.cableCount || 1;
+  cablePrice = rolls * RATES.acc.cableRollPrice;
+  addRow("Camera Cable (Full Roll 90m)", rolls, RATES.acc.cableRollPrice);
+}
+
+
+  /* =========================
+     ACCESSORIES
+  ========================= */
+  if (totalCams > 0) {
+    const bncQty = totalCams * 2;
+    const dcQty = totalCams;
+    const pvcQty = totalCams;
+
+    addRow("BNC Connectors", bncQty, RATES.acc.bnc);
+    addRow("DC Pins", dcQty, RATES.acc.dc);
+    addRow("PVC Boxes", pvcQty, RATES.acc.pvc);
+    addRow("Installation Charges", totalCams, RATES.acc.labor);
+  }
+
+  /* =========================
+     EXTRAS
+  ========================= */
+  if (el("extrasToggle")?.checked) {
+
+    const extras = [
+      { id: "extraRack", label: "Rack", key: "rack" },
+      { id: "extraWifiDongle", label: "WiFi Dongle", key: "dongle" },
+      { id: "extraRouter", label: "Router", key: "router" },
+      { id: "extraHdmi", label: "HDMI Cable", key: "hdmi" },
+      { id: "extraMouseBrand", label: "Mouse", key: "mouse" },
+      { id: "extraUsb", label: "USB Extension", key: "usb" }
+    ];
+
+    extras.forEach(item => {
+      const val = el(item.id)?.value;
+      if (val && val !== "none")
+        addRow(item.label, 1, RATES.extras[item.key]);
+    });
+
+    const monitor = el("extraMonitor")?.value;
+    if (monitor === "19in")
+      addRow("Monitor 19 inch", 1, RATES.extras.mon19);
+
+    if (monitor === "24in")
+      addRow("Monitor 24 inch", 1, RATES.extras.mon24);
+  }
+
+  /* Insert Rows */
+  if (el("invoice-body"))
+    el("invoice-body").innerHTML = rows;
+
+  /* Totals */
+  if (el("inv-subtotal"))
+    el("inv-subtotal").innerText = "₹" + calc.sub.toLocaleString();
+
+  if (el("inv-gst"))
+    el("inv-gst").innerText = "₹" + Math.round(calc.gst).toLocaleString();
+
+  if (el("inv-total"))
+    el("inv-total").innerText = "₹" + Math.round(calc.grand).toLocaleString();
+
+  /* Customer Info */
+  if (el("inv-name"))
+    el("inv-name").innerText = el("custName")?.value || "Valued Customer";
+
+  if (el("inv-phone-disp"))
+    el("inv-phone-disp").innerText = el("custPhone")?.value || "";
+
+  /* Dates */
+  const today = new Date();
+const valid = new Date();
+valid.setDate(today.getDate() + 3);
+
+const monthNames = ["Jan","Feb","Mar","Apr","May","Jun",
+                    "Jul","Aug","Sep","Oct","Nov","Dec"];
+
+/* Format Today */
+const tDay = today.getDate().toString().padStart(2, "0");
+const tMonth = monthNames[today.getMonth()];
+const tYear = today.getFullYear();
+
+/* Format Valid Date */
+const vDay = valid.getDate().toString().padStart(2, "0");
+const vMonth = monthNames[valid.getMonth()];
+const vYear = valid.getFullYear();
+
+if (el("inv-date"))
+  el("inv-date").innerText = `${tDay}-${tMonth}-${tYear}`;
+
+if (el("valid-date"))
+  el("valid-date").innerText = `${vDay}-${vMonth}-${vYear}`;
+
+
+  
+
+  /* Show Invoice */
+  closeModal();
+  
+  el("invoice-view").style.display = "block";
+}
+
+
+
+    function sendWhatsApp() {
+
+  const name = el("inv-name")?.innerText || "";
+  const total = el("inv-total")?.innerText || "";
+  let phone = el("custPhone")?.value.trim() || "";
+
+  // Remove any spaces or + if user typed
+  phone = phone.replace(/\D/g, "");
+
+  // If user entered 10 digits → add 91
+  if (phone.length === 10) {
+    phone = "91" + phone;
+  }
+
+  // If user already entered 91xxxxxxxxxx → keep it
+  if (phone.length !== 12) {
+    alert("Invalid WhatsApp number.");
+    return;
+  }
+
+  let msg = `*QUOTATION - ViRA Enterprises*\n`;
+  msg += `Client: ${name}\n`;
+  msg += `Total: ${total}`;
+
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
+}
+
+
+    </script>
+  </body>
+</html>

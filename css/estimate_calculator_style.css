@@ -1,0 +1,882 @@
+/* ------------------- 
+           CSS VARIABLES & RESET 
+           ------------------- */
+:root {
+  --primary: #0c301e; /* Deep Green */
+  --primary-dark: #092417; /* Darker Green */
+  --accent: #b8860b; /* ViRA Gold */
+  --accent-glow: #d4a017;
+  --bg-dark: #050f0a; /* Almost Black */
+  --card-bg: rgba(12, 48, 30, 0.6);
+  --text-main: #ffffff;
+  --text-muted: #b3c1b7;
+  --border-radius: 12px;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 80px; /* Space for sticky footer */
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Poppins", sans-serif;
+}
+
+/* ------------------- 
+           UTILITIES & COMPONENTS 
+           ------------------- */
+.hidden {
+  display: none !important;
+}
+.fade-in {
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+}
+.btn-primary:active {
+  transform: scale(0.98);
+  background: var(--accent-glow);
+}
+.btn-outline {
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+}
+.btn-whatsapp {
+  background: linear-gradient(45deg, #25d366, #128c7e);
+  color: white;
+}
+
+/* Cards */
+.card {
+  background: var(--primary-dark);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: var(--accent);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Form Elements */
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+select,
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+}
+
+select:focus,
+input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* Stepper */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.stepper-btn {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-dark);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 8px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stepper-val {
+  font-family: 'Anton';  
+  font-size: 1.1rem;
+  font-weight:200;
+  width: 40px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* Toggles */
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #333;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: var(--accent);
+}
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* ------------------- 
+           SCREENS 
+           ------------------- */
+
+/* 1. Splash Screen */
+
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* A more premium, deep radial gradient */
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Smooth transition for when we add the 'hidden' class */
+  transition:
+    opacity 0.8s ease,
+    visibility 0.8s;
+  border: none !important; /* Removed the border as discussed */
+}
+
+/* This creates the smooth fade-out effect */
+#splash-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Add a slight pulse to the logo to make it feel "alive" while loading */
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+}
+
+#app-container {
+  background-color: var(--text-muted);
+}
+.top-heading {
+  color: var(--bg-dark);
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-size: x-large;
+  font-weight: 700;
+  font-style: normal;
+  flex-grow: 1;
+}
+.sub-heading {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  display: inline-block;
+  color: var(--accent);
+  margin: 0 auto 12px auto;
+  border: 1px dotted var(--accent);
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: #071e13;
+}
+
+.logo-text {
+  font-size: 2rem;
+  color: var(--text-main);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.logo-accent {
+  color: var(--accent);
+}
+.tagline {
+  color: var(--text-muted);
+  font-family: "Anton", sans-serif;
+  font-size: 1.7rem;
+  margin-bottom: 30px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(184, 134, 11, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--accent);
+  animation: spin 2s ease-in-out infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 3. Sticky Footer (Resized to match cards) */
+.sticky-footer {
+  position: fixed;
+  bottom: 20px; /* Lifted off the bottom slightly */
+  left: 50%;
+  transform: translateX(-50%); /* Centers the footer */
+  width: 90%; /* Responsive width */
+  max-width: 440px; /* Matches the inner width of your cards */
+  background: rgba(9, 36, 23, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  border: 1px solid var(--accent); /* Border matches card style */
+  border-radius: var(--border-radius); /* Matches card corners */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+/* Adjust body padding so content doesn't get hidden behind the floating footer */
+body {
+  padding-bottom: 120px;
+}
+/* 4. Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end; /* Bottom sheet style */
+}
+.modal-content {
+  background: var(--primary-dark);
+  width: 100%;
+  padding: 25px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-top: 2px solid var(--accent);
+  animation: slideUp 0.3s ease-out;
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* 5. Estimate Result (Invoice Look) */
+.invoice-box {
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.invoice-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+.invoice-total {
+  border-top: 2px solid #333;
+  padding-top: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.header-inline-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.title-group {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between heading and dropdown */
+  flex-wrap: wrap; /* Ensures it looks good on very small screens */
+}
+
+.title-group h2 {
+  color: white;
+  margin: 0;
+  white-space: nowrap;
+}
+
+
+
+.settings-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* --- Interface Styles --- */
+.header-inline-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+.header-inline-container h2 {
+  color: white;
+  font-size: 1.4rem;
+  margin: 0;
+  white-space: nowrap;
+}
+#brandSeries {
+  background: var(--primary-dark);
+  border: 1px solid var(--accent);
+  color: var(--text-muted);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1rem !important;
+  flex-grow: 1;
+  max-width: 100%;
+  cursor: pointer;
+}
+.auto-select-input {
+  background: rgba(0, 0, 0, 0.2) !important;
+  color: var(--text-muted) !important;
+  border: 1px dashed var(--accent) !important;
+  opacity: 0.9;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+.accessory-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+select.extra-select {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.modal-content {
+  width: 90%;
+  max-width: 500px;
+  background: #1a1a1a;
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.extras-panel {
+  display: none;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+}
+.extras-panel.show {
+  display: block;
+  animation: slideDown 0.3s ease-out;
+}
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: 10px;
+}
+#hddSize{
+    background-color: var(--primary-dark);
+}
+/* --- Invoice Screen Styles --- */
+
+.invoice-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: "Inter", sans-serif;
+}
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+.invoice-logo {
+  
+  max-height: 40px;
+}
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+.invoice-table th {
+  background: #f8f9fa;
+  text-align: left;
+  padding: 12px;
+  border-bottom: 2px solid #dee2e6;
+}
+.invoice-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+.invoice-total-section {
+  float: right;
+  width: 300px;
+  margin-top: 20px;
+}
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+.total-row.grand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #2ecc71;
+  border-top: 2px solid #eee;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.no-print-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+/* --- PRINT ONLY THE ESTIMATE --- */
+@media print {
+  body {
+    background: white !important;
+  }
+  #app-container,
+  #sticky-footer,
+  #splash-screen,
+  .modal-overlay,
+  .no-print-actions {
+    display: none !important;
+  }
+  #invoice-view {
+    display: block !important;
+    position: relative !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: white !important;
+  }
+  .invoice-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   INVOICE VIEW (APP MODE)
+========================= */
+/* =========================
+   INVOICE VIEW (APP CARD MODE)
+========================= */
+/* =========================
+   INVOICE VIEW (CENTERED LIKE APP CARD)
+========================= */
+#invoice-view {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  width: 90%;
+  max-width: 650px;
+
+  background: #f8f9fa;
+  color: var(--bg-dark);
+
+  padding: 18px;
+  border-radius: 10px;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  z-index: 300;
+
+  max-height: 85vh;
+  overflow-y: auto;
+
+  animation: scaleIn 0.25s ease;
+}
+
+
+#invoice-view {
+  animation: scaleIn 0.25s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -55%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+
+
+.invoice-header {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+#invoice-view h2,
+#invoice-view h3 {
+  color: var(--primary-dark);
+  margin-bottom: 6px;
+}
+
+#invoice-view p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+/* =========================
+   TABLE (APP MODE)
+========================= */
+#invoice-view table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+#invoice-view th {
+  background: var(--primary-dark);
+  color: var(--accent);
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+#invoice-view td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: #333;
+}
+
+#invoice-view tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================
+   TOTALS
+========================= */
+.invoice-totals {
+  margin-top: 25px;
+  text-align: right;
+  font-size: 15px;
+}
+
+.invoice-totals p {
+  margin: 6px 0;
+}
+
+.invoice-grand {
+  font-size: 18px;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+@media (max-width: 600px) {
+
+  #invoice-view {
+    padding: 15px;
+  }
+
+  #invoice-view table {
+    font-size: 12px;
+  }
+
+  #invoice-view th,
+  #invoice-view td {
+    padding: 6px;
+  }
+
+  .invoice-totals {
+    font-size: 14px;
+  }
+
+  .invoice-grand {
+    font-size: 16px;
+  }
+}
+
+/* =========================
+   PRINT MODE (AUTO WHITE PDF STYLE)
+========================= */
+@media print {
+
+  body * {
+    visibility: hidden;
+  }
+
+  #invoice-view,
+  #invoice-view * {
+    visibility: visible;
+  }
+
+  #invoice-view {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white;
+    color: black;
+    padding: 20px;
+  }
+
+  #invoice-view h2,
+  #invoice-view h3 {
+    color: black;
+  }
+
+  #invoice-view table {
+    font-size: 13px;
+  }
+
+  #invoice-view th {
+    background: #f4f4f4;
+    color: black;
+    border: 1px solid #ccc;
+  }
+
+  #invoice-view td {
+    border: 1px solid #ccc;
+    color: black;
+  }
+
+  .invoice-grand {
+    color: black;
+  }
+
+  #sticky-footer {
+    display: none !important;
+  }
+}
+
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.error-msg {
+  color: #ff4d4d;
+  font-size: 12px;
+  display: block;
+  margin-top: 4px;
+}
+
+.input-error {
+  border: 1px solid #ff4d4d !important;
+}
+/* Common Input Style */
+#customerModal input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: #1e1e1e;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+#customerModal input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+#customerModal input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(184,134,11,0.2);
+}
