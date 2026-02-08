@@ -36,6 +36,15 @@ h3 {
   font-family: "Poppins", sans-serif;
 }
 
+.custom-hr {
+  width: 60px;
+  height: 5px;
+  background: var(--accent);
+  border: none;
+  margin: 12px auto 14px;
+  border-radius: 5px;
+}
+
 /* ------------------- 
            UTILITIES & COMPONENTS 
            ------------------- */
@@ -164,9 +173,9 @@ input:focus {
   justify-content: center;
 }
 .stepper-val {
-  font-family: 'Anton';  
+  font-family: "Anton";
   font-size: 1.1rem;
-  font-weight:200;
+  font-weight: 200;
   width: 40px;
   text-align: center;
   color: var(--text-muted);
@@ -274,28 +283,29 @@ input:checked + .slider:before {
 #app-container {
   background-color: var(--text-muted);
 }
-.top-heading {
-  color: var(--bg-dark);
-  margin: 0;
-  font-family: "Raleway", sans-serif;
-  font-size: x-large;
-  font-weight: 700;
-  font-style: normal;
-  flex-grow: 1;
-}
+
+
+/*==============================*/
 .sub-heading {
   font-family: "Poppins", sans-serif;
   font-size: 0.9rem;
-  font-weight: 400;
+  font-weight: 600;
   display: inline-block;
-  color: var(--accent);
+  color: var(--bg-dark);
   margin: 0 auto 12px auto;
-  border: 1px dotted var(--accent);
+  border: 1px dashed var(--bg-dark);
   padding: 5px 10px;
   border-radius: 10px;
-  background-color: #071e13;
 }
-
+.cable-sub-heading{
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--accent);
+  margin: 0 auto 12px auto;
+  padding: 5px 10px;
+  border-radius: 10px; 
+}
 .logo-text {
   font-size: 2rem;
   color: var(--text-main);
@@ -306,13 +316,26 @@ input:checked + .slider:before {
   color: var(--accent);
 }
 .tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   color: var(--text-muted);
   font-family: "Anton", sans-serif;
-  font-size: 1.7rem;
-  margin-bottom: 30px;
+  font-size: 1.4rem;
   font-weight: 500;
   letter-spacing: 1px;
+  padding: 8px 18px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
+
+.tagline i {
+  font-size: 1.6rem;
+  color: #b8860b;
+}
+
 .loader {
   width: 40px;
   height: 40px;
@@ -351,35 +374,10 @@ input:checked + .slider:before {
 body {
   padding-bottom: 120px;
 }
-/* 4. Modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 200;
-  display: flex;
-  align-items: flex-end; /* Bottom sheet style */
-}
-.modal-content {
-  background: var(--primary-dark);
-  width: 100%;
-  padding: 25px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-top: 2px solid var(--accent);
-  animation: slideUp 0.3s ease-out;
-}
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
+
+
+
+
 
 /* 5. Estimate Result (Invoice Look) */
 .invoice-box {
@@ -431,8 +429,6 @@ body {
   white-space: nowrap;
 }
 
-
-
 .settings-btn {
   background: none;
   border: none;
@@ -457,7 +453,7 @@ body {
 }
 #brandSeries {
   background: var(--primary-dark);
-  border: 1px solid var(--accent);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-muted);
   padding: 8px 12px;
   border-radius: 8px;
@@ -467,14 +463,14 @@ body {
   cursor: pointer;
 }
 .auto-select-input {
-  background: rgba(0, 0, 0, 0.2) !important;
+  background: #071a11 !important;
   color: var(--text-muted) !important;
   border: 1px dashed var(--accent) !important;
   opacity: 0.9;
   width: 100%;
   padding: 10px;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin-bottom: 12px;
 }
 .accessory-grid {
@@ -485,23 +481,23 @@ body {
 }
 select.extra-select {
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
+  background: #071a11;
+  border: 1px dashed var(--accent);
+  color: var(--text-muted);
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 12px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   cursor: pointer;
 }
-
+/* 4. Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(9, 36, 23, 0.65);
   backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
@@ -511,17 +507,17 @@ select.extra-select {
 .modal-content {
   width: 90%;
   max-width: 500px;
-  background: #1a1a1a;
+  background: var(--primary-dark);
   padding: 30px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px dashed var(--accent);
 }
 
 .extras-panel {
   display: none;
   margin-top: 15px;
   padding-top: 15px;
-  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+  border-top: 1px dashed var(--accent);
 }
 .extras-panel.show {
   display: block;
@@ -532,12 +528,12 @@ select.extra-select {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
-  background: rgba(255, 255, 255, 0.05);
+  background: #071a11;
   padding: 12px;
   border-radius: 10px;
 }
-#hddSize{
-    background-color: var(--primary-dark);
+#hddSize {
+  background-color: var(--primary-dark);
 }
 /* --- Invoice Screen Styles --- */
 
@@ -555,7 +551,6 @@ select.extra-select {
   margin-bottom: 20px;
 }
 .invoice-logo {
-  
   max-height: 40px;
 }
 .invoice-table {
@@ -635,18 +630,6 @@ select.extra-select {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* =========================
    INVOICE VIEW (APP MODE)
 ========================= */
@@ -662,7 +645,7 @@ select.extra-select {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  
+
   width: 90%;
   max-width: 650px;
 
@@ -672,7 +655,7 @@ select.extra-select {
   padding: 18px;
   border-radius: 10px;
 
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   z-index: 300;
 
   max-height: 85vh;
@@ -680,7 +663,6 @@ select.extra-select {
 
   animation: scaleIn 0.25s ease;
 }
-
 
 #invoice-view {
   animation: scaleIn 0.25s ease;
@@ -696,8 +678,6 @@ select.extra-select {
     transform: translate(-50%, -50%) scale(1);
   }
 }
-
-
 
 .invoice-header {
   border-bottom: 2px solid var(--accent);
@@ -732,12 +712,12 @@ select.extra-select {
   padding: 10px;
   text-align: left;
   font-size: 14px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #invoice-view td {
   padding: 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   color: #333;
 }
 
@@ -768,7 +748,6 @@ select.extra-select {
    MOBILE OPTIMIZATION
 ========================= */
 @media (max-width: 600px) {
-
   #invoice-view {
     padding: 15px;
   }
@@ -795,7 +774,6 @@ select.extra-select {
    PRINT MODE (AUTO WHITE PDF STYLE)
 ========================= */
 @media print {
-
   body * {
     visibility: hidden;
   }
@@ -844,7 +822,6 @@ select.extra-select {
   }
 }
 
-
 .form-group {
   margin-bottom: 12px;
 }
@@ -864,19 +841,30 @@ select.extra-select {
   width: 100%;
   padding: 12px 14px;
   border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: #1e1e1e;
-  color: #fff;
+  border: 1px dashed var(--accent);
+  background: #071a11;
+  color:var(--text-main);
   font-size: 14px;
   outline: none;
   transition: 0.2s ease;
 }
 
 #customerModal input::placeholder {
-  color: rgba(255,255,255,0.5);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 #customerModal input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(184,134,11,0.2);
+  box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
 }
+#cableStatusText{
+  color: var(--accent);
+  font-family:'Poppins';
+  font-weight:lighter !important;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+
+              
+        
