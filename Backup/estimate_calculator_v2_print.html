@@ -384,116 +384,79 @@
           Create Final Quote
         </button>
         <button
-  class="btn btn-outline"
-  style="margin-top: 12px;"
-  onclick="closeModal()"
->
-  <i class="fas fa-arrow-left"></i> Go Back
-</button>
-
+          class="btn"
+          style="
+            width: 100%;
+            margin-top: 12px;
+            background: transparent;
+            color: #666;
+          "
+          onclick="closeModal()"
+        >
+          Go Back
+        </button>
       </div>
     </div>
 
     <div id="invoice-view">
-<div class="invoice-wrapper">
+      <!-- HEADER -->
+      <div style="display: flex; justify-content: space-between;">
+        <div style="justify-content: space-between;">
+          <img src="images/logo_invoice.png" width="200" alt="">
+         
+        </div>
 
-  <!-- TOP STRIP -->
-  <div class="invoice-title-strip">
-    <div >Estimate for <span id="brandTitle"></span></div>
-  </div>
-
-  <!-- HEADER SECTION -->
-  <div class="invoice-header-block">
-
-    <!-- LEFT COMPANY -->
-    <div class="company-block">
-      
-      <div class="company-details">
-        <img src="images/VE LOGO.png" class="big-logo" />
-      <h3>ViRA Enterprises</h3>
-      <p>Shop No.7, FF, Anandam Square</p>
-      <p>Anandam Estate (Villa Anandam)</p>
-      <p>Ghaziabad U.P. -201001</p>
-      <p>Contact: <strong>9811296013</strong>||<strong>7982942093</strong></p>
-      
-      
-      
-     </div>
-     
-  </div>
-    <!-- RIGHT QUOTATION -->
-    <div class="quotation-block">
-      <div class="quotation-number">
-        <div style="padding: 5px 10px 5px 6px; margin: 0; background: var(--accent); color: #fff; text-align: start;">Quote ID:</div>
-        <div style="padding: 5px 11px 5px 5px; margin: 0; border: 1px solid #ccc;text-align: start;"><strong id="quotationId"></strong></div>
+        <div style="text-align: right">
+          <h3 id="quotationId"></h3>
+          <p><strong>Date:</strong> <span id="inv-date"></span></p>
+          <p><strong>Valid Until:</strong> <span id="valid-date"></span></p>
+        </div>
       </div>
 
-      <p><strong>Date:</strong> <span id="inv-date"></span></p>
-      <p><strong>Valid Until:</strong> <span id="valid-date"></span></p>
-
-      <div class="to-block">
-        <div class="to-label">To:</div>
-        <strong><p id="inv-name"></p></strong>
+      <!-- CUSTOMER -->
+      <div style="margin-bottom: 20px">
+        <strong>To:</strong>
+        <p id="inv-name"></p>
         <p id="inv-phone-disp"></p>
-        
       </div>
-    </div>
 
-  </div>
-  
-  <p style="margin-bottom: -15px;"><strong>GSTIN: 09ABPPY7688G1ZG</strong></p>
-  <!-- TABLE -->
-  <table class="modern-invoice-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Product / Service</th>
-        <th>Qty</th>
-        <th>Unit Price</th>
-        <th>Amount</th>
-      </tr>
-    </thead>
-    <tbody id="invoice-body"></tbody>
-  </table>
+      <!-- TABLE -->
+      <table border="1" width="100%" cellspacing="0" cellpadding="6">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Item Description</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody id="invoice-body"></tbody>
+      </table>
 
-  <!-- TOTAL -->
-  <div class="invoice-total-block">
-    <p>Subtotal: <span id="inv-subtotal"></span></p>
-    <p>GST: <span id="inv-gst"></span></p>
-    <h3>Grand Total: <span id="inv-total"></span></h3>
-  </div>
-
-
-  <div class="invoice-footer">
-
-  <div class="footer-note">
-    <p>Thank you for choosing <strong>ViRA Enterprises</strong>.</p>
-    <p style="font-size: smaller;">This is a system generated quotation.</p>
-  </div>
-
-  <div class="footer-strip">
-    <div style="display: flex; align-items: center;"><i class="fa-solid fa-envelope"></i><span style="font-size: 10px;">&nbsp; Email: info@viraenterprises.in</span></div>
-    <div style="display: flex; align-items: center;"><i class="fa-solid fa-globe"></i><span style="font-size: 10px;"> &nbsp; Web: www.viraenterprises.in</span></div>
-  </div>
-
-</div>
-
-</div>
-
+      <!-- TOTALS -->
+      <div style="margin-top: 20px; text-align: right">
+        <p>SUBTOTAL: <strong id="inv-subtotal"></strong></p>
+        <p>GST (18%): <strong id="inv-gst"></strong></p>
+        <p style="font-size: 18px">
+          GRAND TOTAL: <strong id="inv-total"></strong>
+        </p>
+      </div>
 
 <!-- ACTION BUTTONS -->
 <div class="invoice-actions no-print-actions">
   <button class="btn btn-primary" onclick="printInvoice()">
     <i class="fas fa-print"></i> Print
   </button>
-  
+
   <button class="btn btn-whatsapp" onclick="sendWhatsApp()">
     <i class="fab fa-whatsapp"></i> Share WhatsApp
   </button>
 
- <button class="btn btn-outline" onclick="closeInvoice()">
-  <i class="fas fa-times"></i> Close
-</button>
+  <button class="btn" onclick="closeInvoice()" 
+          style="background:transparent;color:#666;">
+    Close
+  </button>
 </div>
 
 
@@ -641,28 +604,17 @@
       }
 
       function updateCameraModels() {
+        state.brand = el("brandSeries")?.value || state.brand;
+        const brand = RATES.cameras[state.brand];
 
-  state.brand = el("brandSeries")?.value || state.brand;
+        if (el("indoorTypeDisplay"))
+          el("indoorTypeDisplay").value = brand.dName;
 
-  const brand = RATES.cameras[state.brand];
+        if (el("outdoorTypeDisplay"))
+          el("outdoorTypeDisplay").value = brand.bName;
 
-  if (el("indoorTypeDisplay"))
-    el("indoorTypeDisplay").value = brand.dName;
-
-  if (el("outdoorTypeDisplay"))
-    el("outdoorTypeDisplay").value = brand.bName;
-
-  // 🔹 Update Invoice Title
-  const select = el("brandSeries");
-  const selectedText = select.options[select.selectedIndex].text;
-
-  if (el("brandTitle")) {
-    el("brandTitle").innerText = selectedText;
-  }
-
-  calculateTotal();
-}
-
+        calculateTotal();
+      }
 
       function toggleExtras() {
         const panel = el("extrasPanel");
@@ -1076,108 +1028,31 @@ if (el("valid-date"))
   el("invoice-view").style.display = "block";
 }
 
-/* ================= Function sendWhatsApp ============ */
 
-/*
- function sendWhatsApp() {
+
+    function sendWhatsApp() {
 
   const name = el("inv-name")?.innerText || "";
-  const quotation = el("quotationId")?.innerText || "";
   const total = el("inv-total")?.innerText || "";
-  const valid = el("valid-date")?.innerText || "";
   let phone = el("custPhone")?.value.trim() || "";
 
+  // Remove any spaces or + if user typed
   phone = phone.replace(/\D/g, "");
-  if (phone.length === 10) phone = "91" + phone;
 
+  // If user entered 10 digits → add 91
+  if (phone.length === 10) {
+    phone = "91" + phone;
+  }
+
+  // If user already entered 91xxxxxxxxxx → keep it
   if (phone.length !== 12) {
     alert("Invalid WhatsApp number.");
     return;
   }
 
-  let msg = `*ViRA Enterprises*\n`;
-  msg += `CCTV QUOTATION\n\n`;
-  msg += `Quotation No: ${quotation}\n`;
+  let msg = `*QUOTATION - ViRA Enterprises*\n`;
   msg += `Client: ${name}\n`;
-  msg += `Valid Till: ${valid}\n\n`;
-
-  msg += "```\n";   // Start monospace block
-  msg += "Item                 Qty   Rate     Amount\n";
-  msg += "----------------------------------------------\n";
-
-  const rows = document.querySelectorAll("#invoice-body tr");
-
-  rows.forEach(row => {
-    const cols = row.querySelectorAll("td");
-
-    if (cols.length >= 5) {
-      let item = cols[1].innerText.substring(0, 18);
-      let qty = cols[2].innerText;
-      let rate = cols[3].innerText;
-      let amount = cols[4].innerText;
-
-      msg += `${item.padEnd(20)} ${qty.padEnd(5)} ${rate.padEnd(8)} ${amount}\n`;
-    }
-  });
-
-  msg += "----------------------------------------------\n";
-  msg += `Grand Total: ${total}\n`;
-  msg += "```\n\n";  // End monospace block
-
-  msg += "Regards,\nViRA Enterprises";
-
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
-}
-*/
-function sendWhatsApp() {
-
-  const name = el("inv-name")?.innerText || "";
-  const quotation = el("quotationId")?.innerText || "";
-  const total = el("inv-total")?.innerText || "";
-  const valid = el("valid-date")?.innerText || "";
-  let phone = el("custPhone")?.value.trim() || "";
-
-  phone = phone.replace(/\D/g, "");
-  if (phone.length === 10) phone = "91" + phone;
-
-  if (phone.length !== 12) {
-    alert("Invalid WhatsApp number.");
-    return;
-  }
-
-  let msg = `*ViRA Enterprises*\n`;
-  msg += `CCTV QUOTATION\n\n`;
-  msg += `Quotation No: ${quotation}\n`;
-  msg += `Client: ${name}\n`;
-  msg += `Valid Till: ${valid}\n\n`;
-
-  msg += "-----------------------------\n";
-  msg += "*ITEM DETAILS*\n";
-  msg += "-----------------------------\n\n";
-
-  const rows = document.querySelectorAll("#invoice-body tr");
-
-  rows.forEach((row, index) => {
-
-    const cols = row.querySelectorAll("td");
-
-    if (cols.length >= 5) {
-
-      const item = cols[1].innerText;
-      const qty = cols[2].innerText;
-      const rate = cols[3].innerText;
-      const amount = cols[4].innerText;
-
-      msg += `${index + 1}. ${item}\n`;
-      msg += `   Qty: ${qty} | Rate: ${rate} | Amt: ${amount}\n\n`;
-    }
-  });
-
-  msg += "-----------------------------\n";
-  msg += `*Grand Total: ${total}*\n`;
-  msg += "-----------------------------\n\n";
-
-  msg += "Regards,\nViRA Enterprises";
+  msg += `Total: ${total}`;
 
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
 }
@@ -1188,8 +1063,10 @@ function sendWhatsApp() {
 function printInvoice() {
   window.print();
 }
+
+
+
+
     </script>
-
-
   </body>
 </html>
