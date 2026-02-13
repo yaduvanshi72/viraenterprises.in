@@ -8401,7 +8401,7 @@ p.slider-teaser{
 
 .section-main-heading-fp{
   font-weight: 900;
-  font-size: 62px;
+  font-size: 64px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -8415,7 +8415,7 @@ p.slider-teaser{
 }
 @media only screen and (max-width: 768px) {
     .section-main-heading-sp {
-        font-size: 28px !important;
+        font-size: 24px !important;
     }
 }
 /* scrollbar */
